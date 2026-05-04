@@ -1,3 +1,4 @@
+import ContactoForm from "../components/ContactoForm";
 import ContactoHero from "../components/ContactoHero";
 import ContactoInfo from "../components/ContactoInfo";
 
@@ -7,6 +8,7 @@ export default function ContactoPage() {
             <ContactoHero />
             <div className="container" style={{ padding: '4rem 0' }}>
                 <ContactoInfo />
+                <ContactoForm />
             </div>
         </main>
     )
