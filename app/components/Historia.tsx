@@ -1,4 +1,5 @@
 import { CSSProperties } from "react";
+import Image from "next/image";
 
 export default function Historia() {
     return (
@@ -16,9 +17,13 @@ export default function Historia() {
                     </p>
                 </div>
                 <div style={imagePlaceholder}>
-                    <div style={boxStyle}>
-                        Imagen
-                    </div>
+                    <Image
+                        src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600"
+                        alt="Equipo de trabajo de Mi Proyecto"
+                        width={600}
+                        height={400}
+                        style={imageStyle}                    
+                    />
                 </div>
             </div>
         </section>
@@ -60,13 +65,9 @@ const imagePlaceholder: CSSProperties = {
     minWidth: '300px',
 };
 
-const boxStyle: CSSProperties = {
+const imageStyle : CSSProperties = {
     width: '100%',
-    height: '300px',
-    backgroundColor: '#eee',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: 'auto',
     borderRadius: '12px',
-    color: '#888',
+    objectFit: 'cover'
 };
