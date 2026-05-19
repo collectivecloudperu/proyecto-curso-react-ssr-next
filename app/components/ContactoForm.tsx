@@ -1,32 +1,52 @@
 'use client'
 
-import { CSSProperties, useState } from "react"
+import { CSSProperties, use, useState } from "react"
+import { enviarContacto } from "../actions";
 
 export default function ContactoForm() {
     const [status, setStatus] = useState("");
+    const [loading, setLoading] = useState(false);
 
+    /*
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setStatus("¡Mensaje enviado con éxito!");
         // Logica para enviar datos a una API
     };
+    */
+
+    const handleAction = async(FormData: FormData) => {
+        setLoading(true);
+        setStatus("");
+
+        try {
+            const respuesta = await enviarContacto(FormData);
+            if (respuesta.success){
+                setStatus(respuesta.message);                                
+            }
+        } catch (error) {
+            setStatus("Hubo un error al enviar el mensaje.")
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
-        <form style={formStyle} onSubmit={handleSubmit}>
+        <form style={formStyle} action={handleAction}>
             <div style={groupStyle}>
                 <label>Nombre:</label>
-                <input type="text" required style={inputStyle} placeholder="Tu nombre" />
+                <input type="text" id="nombre" name="nombre" required style={inputStyle} placeholder="Tu nombre" />
             </div>
             <div style={groupStyle}>
                 <label>Email:</label>
-                <input type="email" required style={inputStyle} placeholder="correo@correo.com" />
+                <input type="email" id="email" name="email" required style={inputStyle} placeholder="correo@correo.com" />
             </div>
             <div style={groupStyle}>
                 <label>Mensaje:</label>
-                <textarea required style={{ ...inputStyle, height: '150px' }} placeholder="¿En qué podemos ayudarte?"></textarea>
+                <textarea id="mensaje" name="mensaje" required style={{ ...inputStyle, height: '150px' }} placeholder="¿En qué podemos ayudarte?"></textarea>
             </div>
-            <button type="submit" style={buttonStyle}>Enviar Mensaje</button>
-            {status && <p style={{ color: 'green', marginTop: '1rem' }}>{status}</p>}
+            <button type="submit" style={buttonStyle} disabled={loading}>Enviar Mensaje</button>
+            {status && <p style={{ color: 'green', marginTop: '1rem', fontWeight: '500' }}>{status}</p>}
         </form>
     );
 }
